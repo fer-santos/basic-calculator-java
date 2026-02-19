@@ -17,13 +17,26 @@ public class Main {
             operator = scanner.nextLine().charAt(0);
             isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/');
             if (!isValid) {
-                System.out.println("*** ENTER A CORRECTOR OPERATOR! ***");
+                System.out.println("*** ENTER A CORRECTOR OPERATOR! ***\n");
             }
         } while (!isValid);
 
+        float secondNumber;
+        if (operator == '/') {
+            isValid = true;
+            do {
+                System.out.printf("%n%.1f %c ", firstNumber, operator);
+                secondNumber = Float.parseFloat(scanner.nextLine());
+                isValid = secondNumber != 0;
+                if (!isValid) {
+                    System.out.println("\n*** IT IS NOT POSSIBLE TO DIVIDE BY ZERO! ***");
+                }
+            } while (!isValid);
+        } else {
+            System.out.printf("%n%.1f %c ", firstNumber, operator);
+            secondNumber = Float.parseFloat(scanner.nextLine());
+        }
 
-        System.out.printf("%n%.1f %c ", firstNumber, operator);
-        float secondNumber = Float.parseFloat(scanner.nextLine());
         float result = Main.optionSelected(operator, firstNumber, secondNumber);
         System.out.printf("%nResult: %.1f", result);
 
