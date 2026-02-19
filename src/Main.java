@@ -8,15 +8,24 @@ public class Main {
         System.out.print("\nEnter a Number: ");
         float firstNumber = Float.parseFloat(scanner.nextLine());
 
-        System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
-        System.out.println("\n(+)\n(-)\n(*)\n(/)");
-        System.out.print("Option: ");
-        char operation = scanner.nextLine().charAt(0);
+        char operator;
+        boolean isValid = true;
+        do {
+            System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
+            System.out.println("\n(+)\n(-)\n(*)\n(/)");
+            System.out.print("Option: ");
+            operator = scanner.nextLine().charAt(0);
+            isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/');
+            if (!isValid) {
+                System.out.println("*** ENTER A CORRECTOR OPERATOR! ***");
+            }
+        } while (!isValid);
 
-        System.out.printf("%n%.1f %c ", firstNumber, operation);
+
+        System.out.printf("%n%.1f %c ", firstNumber, operator);
         float secondNumber = Float.parseFloat(scanner.nextLine());
-        float result = Main.optionSelected(operation, firstNumber, secondNumber);
-        System.out.printf("Result: %.1f", result);
+        float result = Main.optionSelected(operator, firstNumber, secondNumber);
+        System.out.printf("%nResult: %.1f", result);
 
         scanner.close();
     }
