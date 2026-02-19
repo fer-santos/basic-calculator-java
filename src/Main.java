@@ -5,62 +5,77 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
-        System.out.print("\nEnter a Number: ");
-        float firstNumber = Float.parseFloat(scanner.nextLine());
-
-        char operator;
-        boolean isValid = true;
         char optionContinue;
         do {
-            do {
-                System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
-                System.out.println("\n(+)\n(-)\n(*)\n(/)");
-                System.out.print("Option: ");
-                operator = scanner.nextLine().charAt(0);
-                isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/');
-                if (!isValid) {
-                    System.out.println("*** ENTER A CORRECTOR OPERATOR! ***\n");
-                }
-            } while (!isValid);
+            System.out.print("\nEnter a Number: ");
+            float firstNumber = Float.parseFloat(scanner.nextLine());
 
-            float secondNumber;
-            if (operator == '/') {
-                isValid = true;
+            char operator;
+            boolean isValid = true;
+            do {
                 do {
-                    System.out.printf("%n%.1f %c ", firstNumber, operator);
-                    secondNumber = Float.parseFloat(scanner.nextLine());
-                    isValid = secondNumber != 0;
+                    System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
+                    System.out.println("\n(+)\n(-)\n(*)\n(/)");
+                    System.out.print("Option: ");
+                    operator = scanner.nextLine().charAt(0);
+                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/');
                     if (!isValid) {
-                        System.out.println("\n*** IT IS NOT POSSIBLE TO DIVIDE BY ZERO! ***");
+                        System.out.println("*** ENTER A CORRECTOR OPERATOR! ***\n");
                     }
                 } while (!isValid);
-            } else {
-                System.out.printf("%n%.1f %c ", firstNumber, operator);
-                secondNumber = Float.parseFloat(scanner.nextLine());
-            }
 
-            float result = Main.optionSelected(operator, firstNumber, secondNumber);
-            System.out.printf("%nResult: %.1f%n", result);
+                float secondNumber;
+                if (operator == '/') {
+                    isValid = true;
+                    do {
+                        System.out.printf("%n%.1f %c ", firstNumber, operator);
+                        secondNumber = Float.parseFloat(scanner.nextLine());
+                        isValid = secondNumber != 0;
+                        if (!isValid) {
+                            System.out.println("\n*** IT IS NOT POSSIBLE TO DIVIDE BY ZERO! ***");
+                        }
+                    } while (!isValid);
+                } else {
+                    System.out.printf("%n%.1f %c ", firstNumber, operator);
+                    secondNumber = Float.parseFloat(scanner.nextLine());
+                }
+
+                float result = Main.optionSelected(operator, firstNumber, secondNumber);
+                System.out.printf("%nResult: %.1f%n", result);
+
+                isValid = true;
+                do {
+                    System.out.printf("%nContinue doing operations on %.1f Y/n: ", result);
+                    optionContinue = scanner.nextLine().charAt(0);
+                    isValid = optionContinue == 'Y' || optionContinue == 'y' || optionContinue == 'n' || optionContinue == 'N';
+                    if (!isValid) {
+                        System.out.println("*** ENTER A CORRECT OPTION! (Y/n) ***");
+                    }
+                } while (!isValid);
+
+                if (optionContinue == 'Y' || optionContinue == 'y') {
+                    firstNumber = result;
+                }
+            } while (optionContinue == 'Y' || optionContinue == 'y');
 
             isValid = true;
             do {
-                System.out.printf("%nContinue doing operations on %.1f Y/n: ", result);
+                System.out.println("(1) New Operation\n(2) Exit");
+                System.out.print("Option: ");
                 optionContinue = scanner.nextLine().charAt(0);
-                isValid = optionContinue == 'Y' || optionContinue == 'y' || optionContinue == 'n' || optionContinue == 'N';
+                isValid = optionContinue == '1' || optionContinue == '2';
+
                 if (!isValid) {
-                    System.out.println("*** ENTER A CORRECT OPTION! (Y/n) ***");
+                    System.out.println("\n*** ENTER VALID OPTIONS (1, 2)***\n");
                 }
             } while (!isValid);
-
-            if (optionContinue == 'Y' || optionContinue == 'y') {
-                firstNumber = result;
-            }
-        } while (optionContinue == 'Y' || optionContinue == 'y');
+        } while (optionContinue != '2');
+        System.out.println("\n=== End of Program ===\n");
 
         scanner.close();
     }
 
-    // ### METHODS ###
+    // ###### METHODS ######
     public static float optionSelected(char option, float firstNumber, float secondNumber) {
         float result = 0;
         switch (option) {
