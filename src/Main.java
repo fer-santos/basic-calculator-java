@@ -40,11 +40,14 @@ public class Main {
 
                 float secondNumber = 0;
                 if (operator == '/') {
-                    isValid = true;
+                    isValid = false;
                     do {
-                        System.out.printf("%n%.1f %c ", firstNumber, operator);
-                        secondNumber = Float.parseFloat(scanner.nextLine());
-                        isValid = secondNumber != 0;
+                        secondNumber = 0;
+                        try {
+                            System.out.printf("%n%.1f %c ", firstNumber, operator);
+                            secondNumber = Float.parseFloat(scanner.nextLine());
+                            isValid = secondNumber != 0;
+                        } catch (NumberFormatException e) { }
                         if (!isValid) {
                             System.out.println("\n*** IT IS NOT POSSIBLE TO DIVIDE BY ZERO! ***");
                         }
