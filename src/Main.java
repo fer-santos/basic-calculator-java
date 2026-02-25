@@ -7,22 +7,14 @@ public class Main {
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
         char optionContinue = ' ';
         float firstNumber;
+        float secondNumber;
         boolean isValid;
-        do {
-            firstNumber = 0;
-            isValid = false;
-            do {
-                try {
-                    System.out.print("\nEnter a Number: ");
-                    firstNumber = Float.parseFloat(scanner.nextLine());
-                    isValid = true;
-                } catch (NumberFormatException e) {
-                    System.out.println("\n*** ENTER A NUMERIC VALUE ***");
-                }
-            } while (!isValid);
+        String auxString;
+        char operator;
 
-            char operator = ' ';
-            isValid = true;
+        do {
+            firstNumber = Main.enterNumber("Enter a Number: ");
+            operator = ' ';
             do {
                 operator = ' ';
                 do {
@@ -38,31 +30,13 @@ public class Main {
                     }
                 } while (!isValid);
 
-                float secondNumber = 0;
+                auxString = String.format("%n%.1f %c ", firstNumber, operator);
+                secondNumber = 0;
+
                 if (operator == '/') {
-                    isValid = false;
-                    do {
-                        secondNumber = 0;
-                        try {
-                            System.out.printf("%n%.1f %c ", firstNumber, operator);
-                            secondNumber = Float.parseFloat(scanner.nextLine());
-                            isValid = secondNumber != 0;
-                        } catch (NumberFormatException e) { }
-                        if (!isValid) {
-                            System.out.println("\n*** IT IS NOT POSSIBLE TO DIVIDE BY ZERO! ***");
-                        }
-                    } while (!isValid);
+                    secondNumber = Main.enterNumber(auxString);
                 } else {
-                    isValid = false;
-                    do {
-                        try {
-                            System.out.printf("%n%.1f %c ", firstNumber, operator);
-                            secondNumber = Float.parseFloat(scanner.nextLine());
-                            isValid = true;
-                        } catch (NumberFormatException e) {
-                            System.out.println("*** INPUT A CORRECT VALUE ***");
-                        }
-                    } while (!isValid);
+                    secondNumber = Main.enterNumber(auxString);
                 }
 
                 float result = Main.optionSelected(operator, firstNumber, secondNumber);
@@ -128,5 +102,22 @@ public class Main {
     }
     public static float div(float firstNumber, float secondNumber) {
         return firstNumber / secondNumber;
+    }
+
+    public static float enterNumber (String string) {
+        Scanner scanner = new Scanner(System.in);
+
+        float number = 0;
+        boolean isValid = false;
+        do {
+            try {
+                System.out.printf("%s", string);
+                number = Float.parseFloat(scanner.nextLine());
+                isValid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("\n*** ENTER A NUMERIC VALUE ***");
+            }
+        } while (!isValid);
+        return number;
     }
 }
