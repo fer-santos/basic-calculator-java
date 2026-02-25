@@ -1,8 +1,10 @@
 import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Scanner scanner = new Scanner(System.in);
 
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
         char optionContinue = ' ';
@@ -31,7 +33,7 @@ public class Main {
                 } while (!isValid);
 
                 auxString = String.format("%n%.1f %c ", firstNumber, operator);
-                secondNumber = 0;
+                // secondNumber = 0;
 
                 if (operator == '/') {
                     secondNumber = Main.enterNumber(auxString);
@@ -42,38 +44,15 @@ public class Main {
                 float result = Main.optionSelected(operator, firstNumber, secondNumber);
                 System.out.printf("%nResult: %.1f%n", result);
 
-                isValid = false;
-                do {
-                    try {
-                        System.out.printf("%nContinue doing operations on %.1f Y/n: ", result);
-                        optionContinue = scanner.nextLine().charAt(0);
-                        isValid = optionContinue == 'Y' || optionContinue == 'y' || optionContinue == 'n' || optionContinue == 'N';
-                    } catch (StringIndexOutOfBoundsException e) { }
-
-                    if (!isValid) {
-                        System.out.println("\n*** ENTER A CORRECT OPTION! (Y/n) ***");
-                    }
-                } while (!isValid);
+                optionContinue = Main.continueProgram("%nContinue doing operations on %.1f? Y/n: ".formatted(result));
 
                 if (optionContinue == 'Y' || optionContinue == 'y') {
                     firstNumber = result;
                 }
             } while (optionContinue == 'Y' || optionContinue == 'y');
 
-            isValid = true;
-            do {
-                try {
-                    System.out.println("(1) New Operation\n(2) Exit");
-                    System.out.print("Option: ");
-                    optionContinue = scanner.nextLine().charAt(0);
-                } catch (StringIndexOutOfBoundsException e) { }
-                isValid = optionContinue == '1' || optionContinue == '2';
-
-                if (!isValid) {
-                    System.out.println("\n*** ENTER VALID OPTIONS (1, 2)***\n");
-                }
-            } while (!isValid);
-        } while (optionContinue != '2');
+            optionContinue = Main.continueProgram("New Operation? Y/n: ");
+        } while (optionContinue == 'Y' || optionContinue == 'y');
         System.out.println("\n=== End of Program ===\n");
 
         scanner.close();
@@ -105,7 +84,6 @@ public class Main {
     }
 
     public static float enterNumber (String string) {
-        Scanner scanner = new Scanner(System.in);
 
         float number = 0;
         boolean isValid = false;
@@ -119,5 +97,22 @@ public class Main {
             }
         } while (!isValid);
         return number;
+    }
+
+    public static char continueProgram(String string) {
+        char optionContinue = ' ';
+        boolean isValid = false;
+        do {
+            try {
+                System.out.printf(string);
+                optionContinue = scanner.nextLine().charAt(0);
+                isValid = optionContinue == 'Y' || optionContinue == 'y' || optionContinue == 'n' || optionContinue == 'N';
+            } catch (StringIndexOutOfBoundsException e) { }
+
+            if (!isValid) {
+                System.out.println("\n*** ENTER A CORRECT OPTION! (Y/n) ***\n");
+            }
+        } while (!isValid);
+        return optionContinue;
     }
 }
