@@ -4,8 +4,6 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Scanner scanner = new Scanner(System.in);
-
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
         char optionContinue = ' ';
         float firstNumber;
@@ -36,7 +34,12 @@ public class Main {
                 // secondNumber = 0;
 
                 if (operator == '/') {
-                    secondNumber = Main.enterNumber(auxString);
+                    boolean isNotZero;
+                    do {
+                        secondNumber = Main.enterNumber(auxString);
+                        isNotZero = secondNumber != 0;
+                        if (!isNotZero) System.out.println("\n*** IT IS NOT POSSIBLE DIVIDE BY ZERO ***");
+                    } while (!isNotZero);
                 } else {
                     secondNumber = Main.enterNumber(auxString);
                 }
