@@ -20,11 +20,11 @@ public class Main {
                 do {
                     try {
                         System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
-                        System.out.println("\n(+)\n(-)\n(*)\n(/)");
+                        System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)");
                         System.out.print("Option: ");
                         operator = scanner.nextLine().charAt(0);
                     } catch (StringIndexOutOfBoundsException e) { }
-                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/');
+                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%');
                     if (!isValid) {
                         System.out.println("\n*** ENTER A CORRECTOR OPERATOR! ***\n");
                     }
@@ -33,12 +33,12 @@ public class Main {
                 auxString = String.format("%n%.1f %c ", firstNumber, operator);
                 // secondNumber = 0;
 
-                if (operator == '/') {
+                if (operator == '/' || operator == '%') {
                     boolean isNotZero;
                     do {
                         secondNumber = Main.enterNumber(auxString);
                         isNotZero = secondNumber != 0;
-                        if (!isNotZero) System.out.println("\n*** IT IS NOT POSSIBLE DIVIDE BY ZERO ***");
+                        if (!isNotZero) System.out.println("\n*** OPERATION NOT POSSIBLE ***");
                     } while (!isNotZero);
                 } else {
                     secondNumber = Main.enterNumber(auxString);
@@ -69,6 +69,7 @@ public class Main {
             case '-' -> result = Main.res(firstNumber, secondNumber);
             case '*' -> result = Main.mult(firstNumber, secondNumber);
             case '/' -> result = Main.div(firstNumber, secondNumber);
+            case '%' -> result = Main.mod(firstNumber, secondNumber);
         }
         return result;
     }
@@ -84,6 +85,9 @@ public class Main {
     }
     public static float div(float firstNumber, float secondNumber) {
         return firstNumber / secondNumber;
+    }
+    public static float mod(float firstNumber, float secondNumber) {
+        return firstNumber % secondNumber;
     }
 
     public static float enterNumber (String string) {
