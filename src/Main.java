@@ -20,11 +20,11 @@ public class Main {
                 do {
                     try {
                         System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
-                        System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)");
+                        System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)\n(^)");
                         System.out.print("Option: ");
                         operator = scanner.nextLine().charAt(0);
                     } catch (StringIndexOutOfBoundsException e) { }
-                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%');
+                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%' || operator == '^');
                     if (!isValid) {
                         System.out.println("\n*** ENTER A CORRECTOR OPERATOR! ***\n");
                     }
@@ -70,6 +70,7 @@ public class Main {
             case '*' -> result = Main.mult(firstNumber, secondNumber);
             case '/' -> result = Main.div(firstNumber, secondNumber);
             case '%' -> result = Main.mod(firstNumber, secondNumber);
+            case '^' -> result = Main.pow(firstNumber, secondNumber);
         }
         return result;
     }
@@ -88,6 +89,9 @@ public class Main {
     }
     public static float mod(float firstNumber, float secondNumber) {
         return firstNumber % secondNumber;
+    }
+    public static float pow(float firstNumber, float secondNumber) {
+        return (float) Math.pow((double) firstNumber, (double) secondNumber);
     }
 
     public static float enterNumber (String string) {
