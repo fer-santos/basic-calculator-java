@@ -8,20 +8,19 @@ public class Main {
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
 
         ArrayList<String> history = new ArrayList<>();
+        Calculator calculator = new Calculator();
         String auxString;
         char optionContinue = ' ';
         char operator;
-        float firstNumber;
-        float secondNumber;
         boolean isValid;
 
         do {
-            firstNumber = Main.enterNumber("Enter a Number: ");
+            calculator.setFirstNumber(Main.enterNumber("Enter a Number: "));
             do {
                 operator = ' ';
                 do {
                     try {
-                        System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
+                        System.out.printf("Indicate the Operation to Be Performed to %.1f", calculator.getFirstNumber());
                         System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)\n(^)\n(r)");
                         System.out.print("Option: ");
                         operator = scanner.nextLine().charAt(0);
@@ -35,35 +34,35 @@ public class Main {
 
                 float result = 0;
                 if (operator != 'r') {
-                    auxString = String.format("%n%.1f %c ", firstNumber, operator);
+                    auxString = String.format("%n%.1f %c ", calculator.getFirstNumber(), operator);
 
                     if (operator == '/' || operator == '%') {
                         boolean isNotZero;
                         do {
-                            secondNumber = Main.enterNumber(auxString);
-                            isNotZero = secondNumber != 0;
+                            calculator.setSecondNumber(Main.enterNumber(auxString));
+                            isNotZero = calculator.getSecondNumber() != 0;
                             if (!isNotZero) System.out.println("\n*** OPERATION NOT POSSIBLE ***");
                         } while (!isNotZero);
                     } else {
-                        secondNumber = Main.enterNumber(auxString);
+                        //secondNumber = Main.enterNumber(auxString);
+                        calculator.setSecondNumber(Main.enterNumber(auxString));
                     }
 
-                    result = Main.optionSelected(operator, firstNumber, secondNumber);
+                    result = Main.optionSelected(operator, calculator);
                     System.out.printf("%nResult: %.1f%n", result);
-                    history.add("%.1f %c %.1f = %.1f".formatted(firstNumber, operator, secondNumber, result));
+                    history.add("%.1f %c %.1f = %.1f".formatted(calculator.getFirstNumber(), operator, calculator.getSecondNumber(), result));
                 } else {
-                    if (firstNumber >= 0) {
-                        // result = Main.sqrt(firstNumber);
-                        result = Main.optionSelected(operator, firstNumber, secondNumber = 0);
-                        System.out.println("\u221A" + firstNumber + "=" + result);
-                        history.add("\u221A%.1f = %.1f".formatted(firstNumber, result));
+                    if (calculator.getFirstNumber() >= 0) {
+                        result = Main.optionSelected(operator, calculator);
+                        System.out.println("\u221A" + calculator.getFirstNumber() + "=" + result);
+                        history.add("\u221A%.1f = %.1f".formatted(calculator.getFirstNumber(), result));
                     } else {
                         System.out.println("\n *** IT IS NOT POSSIBLE TO DISPLAY A RESULT WITH A NEGATIVE NUMBER \n***");
                         break;
                     }
                 }
                 optionContinue = Main.continueProgram("%nContinue doing operations on %.1f? Y/n: ".formatted(result));
-                firstNumber = Main.continueOperationWithSqrt(optionContinue, result);
+                calculator.setFirstNumber(Main.continueOperationWithSqrt(optionContinue, result));
             } while (optionContinue == 'Y' || optionContinue == 'y');
 
             optionContinue = Main.continueProgram("New Operation? Y/n: ");
@@ -75,17 +74,17 @@ public class Main {
     }
 
     // ###### METHODS ######
-    public static float optionSelected(char option, float firstNumber, float secondNumber) {
-        Calculator calculator = new Calculator();
+    public static float optionSelected(char option, Calculator calculator) {
+
         float result = 0;
         switch (option) {
-            case '+' -> result = calculator.sum(firstNumber, secondNumber);
-            case '-' -> result = calculator.res(firstNumber, secondNumber);
-            case '*' -> result = calculator.mult(firstNumber, secondNumber);
-            case '/' -> result = calculator.div(firstNumber, secondNumber);
-            case '%' -> result = calculator.mod(firstNumber, secondNumber);
-            case '^' -> result = calculator.pow(firstNumber, secondNumber);
-            case 'r' -> result = calculator.sqrt(firstNumber);
+            case '+' -> result = calculator.sum();
+            case '-' -> result = calculator.res();
+            case '*' -> result = calculator.mult();
+            case '/' -> result = calculator.div();
+            case '%' -> result = calculator.mod();
+            case '^' -> result = calculator.pow();
+            case 'r' -> result = calculator.sqrt();
         }
         return result;
     }

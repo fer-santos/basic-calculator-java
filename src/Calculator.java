@@ -1,24 +1,45 @@
 public class Calculator {
 
-	public float sum(float firstNumber, float secondNumber) {
-		return firstNumber + secondNumber;
+	private float firstNumber;
+	private float secondNumber;
+
+	public float sum() {
+		return this.firstNumber + this.secondNumber;
 	}
-	public float res(float firstNumber, float secondNumber) {
-		return firstNumber - secondNumber;
+	public float res() {
+		return this.firstNumber - this.secondNumber;
 	}
-	public float mult(float firstNumber, float secondNumber) {
-		return firstNumber * secondNumber;
+	public float mult() {
+		return this.firstNumber * this.secondNumber;
 	}
-	public float div(float firstNumber, float secondNumber) {
-		return firstNumber / secondNumber;
+	public float div() {
+		return this.firstNumber / this.secondNumber;
 	}
-	public float mod(float firstNumber, float secondNumber) {
-		return firstNumber % secondNumber;
+	public float mod() {
+		return this.firstNumber % this.secondNumber;
 	}
-	public float pow(float firstNumber, float secondNumber) {
-		return (float) Math.pow((double) firstNumber, (double) secondNumber);
+	public float pow() {
+		return (float) Math.pow((double) this.firstNumber, (double) this.secondNumber);
 	}
-	public float sqrt(float number) {
-		return (float) Math.sqrt(number);
+	public float sqrt() {
+		return (float) Math.sqrt(this.firstNumber);
+	}
+
+
+	// ### Getter & Setter ###
+	public float getFirstNumber() {
+		return firstNumber;
+	}
+
+	public void setFirstNumber(float firstNumber) {
+		this.firstNumber = firstNumber;
+	}
+
+	public float getSecondNumber() {
+		return secondNumber;
+	}
+
+	public void setSecondNumber(float secondNumber) {
+		this.secondNumber = secondNumber;
 	}
 }
