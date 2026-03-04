@@ -1,16 +1,19 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("--- |WELCOME TO BASIC CALCULATOR JAVA| ---");
+
+        ArrayList<String> history = new ArrayList<>();
+        String auxString;
         char optionContinue = ' ';
+        char operator;
         float firstNumber;
         float secondNumber;
         boolean isValid;
-        String auxString;
-        char operator;
 
         do {
             firstNumber = Main.enterNumber("Enter a Number: ");
@@ -47,10 +50,12 @@ public class Main {
 
                     result = Main.optionSelected(operator, firstNumber, secondNumber);
                     System.out.printf("%nResult: %.1f%n", result);
+                    history.add("%.1f %c %.1f = %.1f".formatted(firstNumber, operator, secondNumber, result));
                 } else {
                     if (firstNumber >= 0) {
                         result = Main.sqrt(firstNumber);
                         System.out.println("\u221A" + firstNumber + "=" + result);
+                        history.add("\u221A%.1f = %.1f".formatted(firstNumber, result));
                     } else {
                         System.out.println("\n *** IT IS NOT POSSIBLE TO DISPLAY A RESULT WITH A NEGATIVE NUMBER \n***");
                         break;
@@ -62,6 +67,7 @@ public class Main {
 
             optionContinue = Main.continueProgram("New Operation? Y/n: ");
         } while (optionContinue == 'Y' || optionContinue == 'y');
+        Main.printHistory(history);
         System.out.println("\n=== End of Program ===\n");
 
         scanner.close();
@@ -143,5 +149,12 @@ public class Main {
             firstNumber = result;
         }
         return firstNumber;
+    }
+
+    public static void printHistory(ArrayList<String> history) {
+        System.out.println("\n --- |OPERATION HISTORY| ---");
+        for (String operation : history) {
+            System.out.println(operation);
+        }
     }
 }
