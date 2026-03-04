@@ -53,7 +53,8 @@ public class Main {
                     history.add("%.1f %c %.1f = %.1f".formatted(firstNumber, operator, secondNumber, result));
                 } else {
                     if (firstNumber >= 0) {
-                        result = Main.sqrt(firstNumber);
+                        // result = Main.sqrt(firstNumber);
+                        result = Main.optionSelected(operator, firstNumber, secondNumber = 0);
                         System.out.println("\u221A" + firstNumber + "=" + result);
                         history.add("\u221A%.1f = %.1f".formatted(firstNumber, result));
                     } else {
@@ -75,39 +76,18 @@ public class Main {
 
     // ###### METHODS ######
     public static float optionSelected(char option, float firstNumber, float secondNumber) {
+        Calculator calculator = new Calculator();
         float result = 0;
         switch (option) {
-            case '+' -> result = Main.sum(firstNumber, secondNumber);
-            case '-' -> result = Main.res(firstNumber, secondNumber);
-            case '*' -> result = Main.mult(firstNumber, secondNumber);
-            case '/' -> result = Main.div(firstNumber, secondNumber);
-            case '%' -> result = Main.mod(firstNumber, secondNumber);
-            case '^' -> result = Main.pow(firstNumber, secondNumber);
-            case 'r' -> result = Main.sqrt(firstNumber);
+            case '+' -> result = calculator.sum(firstNumber, secondNumber);
+            case '-' -> result = calculator.res(firstNumber, secondNumber);
+            case '*' -> result = calculator.mult(firstNumber, secondNumber);
+            case '/' -> result = calculator.div(firstNumber, secondNumber);
+            case '%' -> result = calculator.mod(firstNumber, secondNumber);
+            case '^' -> result = calculator.pow(firstNumber, secondNumber);
+            case 'r' -> result = calculator.sqrt(firstNumber);
         }
         return result;
-    }
-
-    public static float sum(float firstNumber, float secondNumber) {
-        return firstNumber + secondNumber;
-    }
-    public static float res(float firstNumber, float secondNumber) {
-        return firstNumber - secondNumber;
-    }
-    public static float mult(float firstNumber, float secondNumber) {
-        return firstNumber * secondNumber;
-    }
-    public static float div(float firstNumber, float secondNumber) {
-        return firstNumber / secondNumber;
-    }
-    public static float mod(float firstNumber, float secondNumber) {
-        return firstNumber % secondNumber;
-    }
-    public static float pow(float firstNumber, float secondNumber) {
-        return (float) Math.pow((double) firstNumber, (double) secondNumber);
-    }
-    public static float sqrt(float number) {
-        return (float) Math.sqrt(number);
     }
 
     public static float enterNumber (String string) {
