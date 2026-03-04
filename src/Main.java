@@ -14,44 +14,50 @@ public class Main {
 
         do {
             firstNumber = Main.enterNumber("Enter a Number: ");
-            operator = ' ';
             do {
                 operator = ' ';
                 do {
                     try {
                         System.out.printf("Indicate the Operation to Be Performed to %.1f", firstNumber);
-                        System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)\n(^)");
+                        System.out.println("\n(+)\n(-)\n(*)\n(/)\n(%)\n(^)\n(r)");
                         System.out.print("Option: ");
                         operator = scanner.nextLine().charAt(0);
-                    } catch (StringIndexOutOfBoundsException e) { }
-                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%' || operator == '^');
+                    } catch (StringIndexOutOfBoundsException e) {
+                    }
+                    isValid = (operator == '+' || operator == '-' || operator == '*' || operator == '/' || operator == '%' || operator == '^' || operator == 'r');
                     if (!isValid) {
                         System.out.println("\n*** ENTER A CORRECTOR OPERATOR! ***\n");
                     }
                 } while (!isValid);
 
-                auxString = String.format("%n%.1f %c ", firstNumber, operator);
-                // secondNumber = 0;
+                float result = 0;
+                if (operator != 'r') {
+                    auxString = String.format("%n%.1f %c ", firstNumber, operator);
 
-                if (operator == '/' || operator == '%') {
-                    boolean isNotZero;
-                    do {
+                    if (operator == '/' || operator == '%') {
+                        boolean isNotZero;
+                        do {
+                            secondNumber = Main.enterNumber(auxString);
+                            isNotZero = secondNumber != 0;
+                            if (!isNotZero) System.out.println("\n*** OPERATION NOT POSSIBLE ***");
+                        } while (!isNotZero);
+                    } else {
                         secondNumber = Main.enterNumber(auxString);
-                        isNotZero = secondNumber != 0;
-                        if (!isNotZero) System.out.println("\n*** OPERATION NOT POSSIBLE ***");
-                    } while (!isNotZero);
+                    }
+
+                    result = Main.optionSelected(operator, firstNumber, secondNumber);
+                    System.out.printf("%nResult: %.1f%n", result);
                 } else {
-                    secondNumber = Main.enterNumber(auxString);
+                    if (firstNumber >= 0) {
+                        result = Main.sqrt(firstNumber);
+                        System.out.println("\u221A" + firstNumber + "=" + result);
+                    } else {
+                        System.out.println("\n *** IT IS NOT POSSIBLE TO DISPLAY A RESULT WITH A NEGATIVE NUMBER \n***");
+                        break;
+                    }
                 }
-
-                float result = Main.optionSelected(operator, firstNumber, secondNumber);
-                System.out.printf("%nResult: %.1f%n", result);
-
                 optionContinue = Main.continueProgram("%nContinue doing operations on %.1f? Y/n: ".formatted(result));
-
-                if (optionContinue == 'Y' || optionContinue == 'y') {
-                    firstNumber = result;
-                }
+                firstNumber = Main.continueOperationWithSqrt(optionContinue, result);
             } while (optionContinue == 'Y' || optionContinue == 'y');
 
             optionContinue = Main.continueProgram("New Operation? Y/n: ");
@@ -71,6 +77,7 @@ public class Main {
             case '/' -> result = Main.div(firstNumber, secondNumber);
             case '%' -> result = Main.mod(firstNumber, secondNumber);
             case '^' -> result = Main.pow(firstNumber, secondNumber);
+            case 'r' -> result = Main.sqrt(firstNumber);
         }
         return result;
     }
@@ -92,6 +99,9 @@ public class Main {
     }
     public static float pow(float firstNumber, float secondNumber) {
         return (float) Math.pow((double) firstNumber, (double) secondNumber);
+    }
+    public static float sqrt(float number) {
+        return (float) Math.sqrt(number);
     }
 
     public static float enterNumber (String string) {
@@ -125,5 +135,13 @@ public class Main {
             }
         } while (!isValid);
         return optionContinue;
+    }
+
+    public static float continueOperationWithSqrt(char optionContinue, float result) {
+        float firstNumber = 0;
+        if (optionContinue == 'Y' || optionContinue == 'y') {
+            firstNumber = result;
+        }
+        return firstNumber;
     }
 }
